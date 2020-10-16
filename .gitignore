@@ -1,0 +1,7 @@
+# ignoring python local environment
+/morse_env
+
+# ignoring vscode settings
+/.vscode
+
+/__pycache__
