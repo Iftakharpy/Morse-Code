@@ -57,11 +57,11 @@ End of work|...-.-
 Starting Signal|-.-.-
 
 
-&|.-... #conflict 2
-Wait|.-... #conflict 2
-
 K|-.- #conflict 1
 Invitation to Transmit|-.- #conflict 1
+
+&|.-... #conflict 2
+Wait|.-... #conflict 2
 
 +|.-.-. #conflict 3
 New Page Signal|.-.-. #conflict 3
