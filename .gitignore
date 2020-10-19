@@ -1,7 +1,14 @@
+/__pycache__
+
 # ignoring python local environment
 /morse_env
 
 # ignoring vscode settings
 /.vscode
 
-/__pycache__
+
+# ignoring wav files
+*/*.wav
+
+# ignoring images
+images/
