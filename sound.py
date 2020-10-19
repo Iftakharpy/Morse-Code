@@ -3,7 +3,7 @@ import numpy as np
 from wave_audio import gen_sound_arr
 from checkers import is_valid_morse
 
-T = lambda wpm: 120/wpm
+
 
 channels = 1
 sample_width = 2
@@ -11,13 +11,24 @@ bitrate = 44100
 seconds = 1
 params = (channels, sample_width, bitrate, bitrate*seconds, "NONE", "Not Compressed")
 
-wpm = 200
-dot_audio_len = T(wpm) # unit seconds(s)
-dash_audio_len = dot_audio_len * .7
-space_audio_len = T(wpm+50)
 
-dot_audio = gen_sound_arr(seconds=dot_audio_len, frequency=240)
-dash_audio = gen_sound_arr(seconds=dash_audio_len, frequency=2400)
+starting_offset = 1
+ending_offset = .5
+
+dot_audio_len =  .3# unit seconds(s)
+dash_audio_len = dot_audio_len*1.6
+space_audio_len = .15
+
+# sound frequency
+dot_frequency = 120
+dash_frequency = 120
+
+# sound amplitude(loudness)
+dot_amp = 100
+dash_amp = 100
+
+dot_audio = gen_sound_arr(seconds=dot_audio_len, frequency=dot_frequency, amplitude=dot_amp)
+dash_audio = gen_sound_arr(seconds=dash_audio_len, frequency=dash_frequency, amplitude=dash_amp)
 space_audio = gen_sound_arr(seconds=space_audio_len, silent=True)
 
 
@@ -26,7 +37,7 @@ def write_audio_for_morse_code(file_name, morse_code_string):
     assert is_valid_morse(morse_code_string)
 
     #blank sound a the start
-    code_arr = np.concatenate((gen_sound_arr(seconds=2, silent=True),))
+    code_arr = np.concatenate((gen_sound_arr(seconds=starting_offset, silent=True),))
 
     #making sound for the morse code
     for ch in morse_code_string:
@@ -37,7 +48,7 @@ def write_audio_for_morse_code(file_name, morse_code_string):
         else:
             code_arr = np.concatenate((code_arr, space_audio, space_audio))
     #blank sound at the end
-    code_arr = np.concatenate((code_arr, gen_sound_arr(seconds=2, silent=True)))
+    code_arr = np.concatenate((code_arr, gen_sound_arr(seconds=ending_offset, silent=True)))
     
     # openning an audio file
     audio_file = wave.open(file_name,"w")
@@ -54,5 +65,5 @@ def write_audio_for_morse_code(file_name, morse_code_string):
 
 
 file_name = "hello_world_2.wav"
-morse_code = ".... . .-.. .-.. ---     .-- --- .-. .-.. -.."
+morse_code = ".... . .-.. .-.. ---   .-- --- .-. .-.. -.."
 write_audio_for_morse_code(file_name, morse_code)
